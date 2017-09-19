@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+foreach ([__DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php'] as $autoLoaderFile) {
+    if (file_exists($autoLoaderFile)) {
+        require_once $autoLoaderFile;
+        break;
+    }
+}
+
+$application = new Symfony\Component\Console\Application('yaml-lint', '0.0.1');
+$command = new Symfony\Component\Yaml\Command\LintCommand();
+$application->add($command);
+$application->setDefaultCommand($command->getName(), true);
+$application->run();
