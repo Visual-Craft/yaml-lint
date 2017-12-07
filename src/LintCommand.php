@@ -100,7 +100,7 @@ EOF
             return $prevErrorHandler ? $prevErrorHandler($level, $message, $file, $line) : false;
         });
 
-        if (isset($this->disabledChecks['constants'])) {
+        if (isset($this->disabledChecks['constants']) || !defined(Yaml::class . '::PARSE_CONSTANT')) {
             $flags = 0;
         } else {
             $flags = Yaml::PARSE_CONSTANT;

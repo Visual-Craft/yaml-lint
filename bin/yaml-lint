@@ -11,5 +11,20 @@ foreach ([__DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php'] a
 $application = new Symfony\Component\Console\Application('yaml-lint', '0.0.1');
 $command = new VisualCraft\YamlLint\LintCommand();
 $application->add($command);
-$application->setDefaultCommand($command->getName(), true);
-$application->run();
+
+$isSF28 = function (\Symfony\Component\Console\Application $application) {
+    $reflection = new ReflectionObject($application);
+
+    return $reflection->getMethod('setDefaultCommand')->getNumberOfParameters() < 2;
+};
+
+if (!$isSF28($application)) {
+    $application->setDefaultCommand($command->getName(), true);
+    $application->run();
+} else {
+    $application->setDefaultCommand($command->getName());
+    $args = $_SERVER['argv'];
+    array_splice($args, 1, 0, [$command->getName()]);
+    $applicationInput = new \Symfony\Component\Console\Input\ArgvInput($args);
+    $application->run($applicationInput);
+}
