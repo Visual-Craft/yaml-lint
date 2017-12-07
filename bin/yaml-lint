@@ -9,7 +9,7 @@ foreach ([__DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php'] a
 }
 
 $application = new Symfony\Component\Console\Application('yaml-lint', '0.0.1');
-$command = new Symfony\Component\Yaml\Command\LintCommand();
+$command = new VisualCraft\YamlLint\LintCommand();
 $application->add($command);
 $application->setDefaultCommand($command->getName(), true);
 $application->run();
