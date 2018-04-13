@@ -100,11 +100,15 @@ EOF
             return $prevErrorHandler ? $prevErrorHandler($level, $message, $file, $line) : false;
         });
 
+        if (defined(Yaml::class . '::PARSE_CONSTANT')) {
+            $flags = Yaml::PARSE_CONSTANT;
+        } else {
+            $flags = 0;
+        }
+
         if (isset($this->disabledChecks['constants'])) {
             require_once __DIR__ . '/../hacks/constant.php';
         }
-
-        $flags = Yaml::PARSE_CONSTANT;
 
         try {
             $this->getParser()->parse($content, $flags);
