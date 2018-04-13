@@ -101,7 +101,7 @@ EOF
         });
 
         if (isset($this->disabledChecks['constants'])) {
-            require_once __DIR__ . '/../Validation/Hack.php';
+            require_once __DIR__ . '/../hacks/constant.php';
         }
 
         $flags = Yaml::PARSE_CONSTANT;
