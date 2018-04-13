@@ -30,7 +30,7 @@ cp -R "$root_dir/"* "$build_dir/"
 rm -rf "$build_dir/support" "$build_dir/dist"
 rm -f "$build_dir/.gitignore" "$build_dir/README.md"
 
-for symfony_version in "3.0" "2.8" "3.3.0"; do
+for symfony_version in "2.8" "3.3.0" "3.4.0"; do
     rm -f "$build_dir/composer.lock"
     "$composer_bin" require --update-no-dev --no-interaction --optimize-autoloader \
         "symfony/console:~${symfony_version}" \
