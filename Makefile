@@ -37,7 +37,7 @@ $(PHAR): $(DIR)/composer.json $(SOURCES) | $(DIST) $(COMPOSER_BIN) $(PHAR_COMPOS
 	rm -rf $(BUILD_FILES)
 	mkdir -p $(BUILD_FILES)
 	cp -r $(DIR)/src $(DIR)/bin $(DIR)/composer.json $(BUILD_FILES)
-	cd $(BUILD_FILES) && $(COMPOSER_BIN) require --update-no-dev --no-interaction --classmap-authoritative \
+	cd $(BUILD_FILES) && $(COMPOSER_BIN) require --update-no-dev --no-interaction --classmap-authoritative --ignore-platform-reqs \
 		"symfony/console:~$(SF_VER)" \
 		"symfony/yaml:~$(SF_VER)" \
 		"symfony/debug:~$(SF_VER)"
