@@ -10,14 +10,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Yaml\Yaml;
 
 class LintCommand extends Command
 {
     private $parser;
     private $format;
     private $displayCorrectFiles;
-    private $disabledChecks;
 
     /**
      * {@inheritdoc}
@@ -29,7 +27,6 @@ class LintCommand extends Command
             ->setDescription('Lints a file and outputs encountered errors')
             ->addArgument('filename', InputArgument::IS_ARRAY, 'A files or directories')
             ->addOption('format', null, InputOption::VALUE_REQUIRED, 'The output format', 'txt')
-            ->addOption('disabled', null, InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'Disabled checks')
             ->setHelp(<<<EOF
 The <info>%command.name%</info> command lints a YAML file and outputs to STDOUT
 the first encountered syntax error.
@@ -62,8 +59,6 @@ EOF
         $filenames = $input->getArgument('filename');
         $this->format = $input->getOption('format');
         $this->displayCorrectFiles = $output->isVerbose();
-        $disabled = $input->getOption('disabled');
-        $this->disabledChecks = array_combine($disabled, array_fill(0, count($disabled), true));
 
         if (!$filenames) {
             if (!$stdin = $this->getStdin()) {
@@ -100,18 +95,8 @@ EOF
             return $prevErrorHandler ? $prevErrorHandler($level, $message, $file, $line) : false;
         });
 
-        if (defined(Yaml::class . '::PARSE_CONSTANT')) {
-            $flags = Yaml::PARSE_CONSTANT;
-        } else {
-            $flags = 0;
-        }
-
-        if (isset($this->disabledChecks['constants'])) {
-            require_once __DIR__ . '/../hacks/constant.php';
-        }
-
         try {
-            $this->getParser()->parse($content, $flags);
+            $this->getParser()->parse($content, 0);
         } catch (ParseException $e) {
             return array('file' => $file, 'valid' => false, 'message' => $e->getMessage());
         } finally {
