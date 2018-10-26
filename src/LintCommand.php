@@ -98,7 +98,7 @@ EOF
         try {
             $this->getParser()->parse($content, 0);
         } catch (ParseException $e) {
-            return array('file' => $file, 'valid' => false, 'message' => $e->getMessage());
+            return array('file' => $file, 'line' => $e->getParsedLine(), 'valid' => false, 'message' => $e->getMessage());
         } finally {
             restore_error_handler();
         }
