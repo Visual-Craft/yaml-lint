@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Yaml;
 
 class LintCommand extends Command
 {
@@ -95,8 +96,14 @@ EOF
             return $prevErrorHandler ? $prevErrorHandler($level, $message, $file, $line) : false;
         });
 
+        if (defined(Yaml::class . '::PARSE_CUSTOM_TAGS')) {
+            $flags = Yaml::PARSE_CUSTOM_TAGS;
+        } else {
+            $flags = 0;
+        }
+
         try {
-            $this->getParser()->parse($content, 0);
+            $this->getParser()->parse($content, $flags);
         } catch (ParseException $e) {
             return array('file' => $file, 'line' => $e->getParsedLine(), 'valid' => false, 'message' => $e->getMessage());
         } finally {
