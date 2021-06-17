@@ -53,8 +53,8 @@ $(PHAR): $(DIR)/composer.json $(SOURCES) | $(DIST) $(COMPOSER_BIN) $(PHAR_COMPOS
 
 $(COMPOSER_BIN) $(PHAR_COMPOSER_BIN):
 	mkdir -p $(TOOLS_DIR)
-	wget "https://getcomposer.org/download/1.7.2/composer.phar" -O $(COMPOSER_BIN)
-	wget "https://github.com/clue/phar-composer/releases/download/v1.0.0/phar-composer.phar" -O $(PHAR_COMPOSER_BIN)
+	wget "https://getcomposer.org/download/2.1.3/composer.phar" -O $(COMPOSER_BIN)
+	wget "https://github.com/clue/phar-composer/releases/download/v1.2.0/phar-composer-1.2.0.phar" -O $(PHAR_COMPOSER_BIN)
 	chmod +x $(COMPOSER_BIN) $(PHAR_COMPOSER_BIN)
 
 $(DIST):
