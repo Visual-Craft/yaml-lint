@@ -13,7 +13,7 @@
             "email": "me@inso.im"
         }
     ],
-    "bin": ["bin/yaml-lint"],
+    "bin": ["bin/vc-yaml-lint"],
     "autoload": {
         "psr-4": { "VisualCraft\\YamlLint\\": "src" }
     }

@@ -1,4 +1,4 @@
-APP_NAME := yaml-lint
+APP_NAME := vc-yaml-lint
 
 DIR := $(realpath $(dir $(realpath $(MAKEFILE_LIST))))
 DIST := $(DIR)/dist
@@ -16,7 +16,7 @@ endif
 PHAR := $(DIST)/$(APP_NAME)-sf$(SF_VER).phar
 
 SOURCES := $(shell find $(DIR)/src -name '*.php')
-SOURCES += $(DIR)/bin/yaml-lint
+SOURCES += $(DIR)/bin/vc-yaml-lint
 
 
 .PHONY: build
